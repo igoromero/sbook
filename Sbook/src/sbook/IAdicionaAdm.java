@@ -15,14 +15,18 @@ public class IAdicionaAdm extends javax.swing.JFrame {
 
     private boolean terminou;
     private boolean janelaFechada;
+    private Sistema sistema;
 
     /**
      * Creates new form IAdicionaAdm
      *
-     * @param s Sistema para adicionar os administradores;
+     * @param sistema
      */
-    public IAdicionaAdm() {
+    public IAdicionaAdm(Sistema sistema) {
+        this.sistema = sistema;
         initComponents();
+        this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -40,14 +44,17 @@ public class IAdicionaAdm extends javax.swing.JFrame {
         jTxtCPF = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTxtSenha = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTxtConfirmarSenha = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jTxtEmail = new javax.swing.JTextField();
+        jTxtSenha = new javax.swing.JPasswordField();
+        jTxtConfirmarSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Adicione um novo usuário");
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -70,8 +77,22 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Email:");
+
+        jTxtConfirmarSenha.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,23 +104,28 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel6)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTxtNome, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTxtEmail, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTxtConfirmarSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-                                .addComponent(jTxtSenha, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTxtCPF, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTxtNome, javax.swing.GroupLayout.Alignment.LEADING)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTxtCPF)
+                                    .addComponent(jTxtSenha)
+                                    .addComponent(jTxtConfirmarSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE))))
+                        .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,9 +138,13 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                     .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTxtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -124,8 +154,8 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                     .addComponent(jTxtConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -140,6 +170,17 @@ public class IAdicionaAdm extends javax.swing.JFrame {
         janelaFechada = true;
     }//GEN-LAST:event_formWindowClosing
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:                             
+        terminou = true;
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:                           
+        janelaFechada = true;
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -148,47 +189,78 @@ public class IAdicionaAdm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTxtCPF;
-    private javax.swing.JTextField jTxtConfirmarSenha;
+    private javax.swing.JPasswordField jTxtConfirmarSenha;
+    private javax.swing.JTextField jTxtEmail;
     private javax.swing.JTextField jTxtNome;
-    private javax.swing.JTextField jTxtSenha;
+    private javax.swing.JPasswordField jTxtSenha;
     // End of variables declaration//GEN-END:variables
 
     @SuppressWarnings("SleepWhileInLoop")
-    Administrador getAdm() {
+    Administrador cadastraAdm() {
         this.terminou = false;
         janelaFechada = false;
         this.setVisible(true);
         while (true) {
             if (janelaFechada) {
+                this.setVisible(false);
                 return null;
             }
             if (terminou) {
                 //testa os dados entrados pelo usuário
+                
+                //testa o campo Nome
                 String nome = jTxtNome.getText();
                 if(nome.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "O campo Nome está vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
                     continue;
                 }
+                
+                //testa o camp email
+                String email = jTxtEmail.getText();
+                if(email.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "O campo email está vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    terminou = false;
+                    continue;
+                    
+                } else if(sistema.procuraUsuarioPorEmail(email) != null) { //procura o email no sistema
+                    JOptionPane.showMessageDialog(null, "Esse email já está cadastrado no sistema.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    terminou = false;
+                    continue;
+                    
+                } else if(email.indexOf('@') == -1) {
+                    JOptionPane.showMessageDialog(null, "Email inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+                    terminou = false;
+                    continue;
+                }
+                
+                //testa o campo CPF
                 String CPF = jTxtCPF.getText();
                 if(CPF.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "O campo CPF está vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
                     continue;
                 }
+                
+                //senha
                 String senha = jTxtSenha.getText();
                 if(senha.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "O campo Senha está vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
                     continue;
                 }
+                
+                //confirmar a senha
                 String confirmarSenha = jTxtConfirmarSenha.getText();
                 if(confirmarSenha.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Confirme a senha", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
                     continue;
                 }
+                
+                //testa se as senhas não iguais
                 if(!senha.equals(confirmarSenha)) {
                     JOptionPane.showMessageDialog(null, "As senhas não conferem...", "Erro", JOptionPane.ERROR_MESSAGE);
                     jTxtSenha.setText(null);
@@ -202,11 +274,14 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                 jTxtCPF.setText(null);
                 jTxtNome.setText(null);
                 jTxtSenha.setText(null);
+                jTxtEmail.setText(null);
                 jTxtConfirmarSenha.setText(null);
                 
                 //esconde a janela
                 this.setVisible(false);
-                return new Administrador(nome, CPF, senha);
+                Administrador a = new Administrador(nome, CPF, senha, email);
+                sistema.cadastra(a);
+                return a;
                 
             } else {
                 try {

@@ -20,6 +20,7 @@ public class Sistema {
     private final List<ItemAcervo> acervo;
     private final IAdicionaAdm painelAdicionaAdm;
     private final ILogin painelLogin;
+    private Usuario logado;
     
     
     Sistema() {
@@ -27,33 +28,70 @@ public class Sistema {
         usuarios = new LinkedList<>();
         acervo = new LinkedList<>();
         
-        painelAdicionaAdm = new IAdicionaAdm();
-        painelLogin = new ILogin();
-        iniciaDatabase();
+        painelAdicionaAdm = new IAdicionaAdm(this);
+        painelLogin = new ILogin(this);
+        carregaDatabase();
         
     }
     
     void executa() {
-        if(administradores.size() == 0) { //se não tem nenhum administrador, obriga o usuário a criar um.
+        if(administradores.isEmpty()) { //se não tem nenhum administrador, obriga o usuário a criar um.
             JOptionPane.showMessageDialog(null, "O sistema não tem nenhum administrador. Adicione um.");
-            Administrador adm = painelAdicionaAdm.getAdm();
-            administradores.add(adm);
+            Administrador adm = painelAdicionaAdm.cadastraAdm();
         }
-        Usuario u = painelLogin.fazLogin(this);
+        logado = painelLogin.entraUsuario();
+        if(logado == null) {
+            salvaDatabase();
+            System.exit(0);
+        }
     }
 
-    private void iniciaDatabase() {
+    private void carregaDatabase() {
         //iniciar a database aqui
     }
 
-    Usuario loginUsuario(String nome, String senha) {
+    private void salvaDatabase() {
+    
+    }
+    
+    Usuario loginUsuario(String email, String senha) {
         //procura nos administradores
         for(Administrador adm:administradores) {
-            if(adm.getNome().equals(nome) && adm.getSenha().equals(senha)) {
+            if(adm.getEmail().equals(email) && adm.getSenha().equals(senha)) {
                 return adm;
             }
         }
         return null;
     }
+
+    Usuario procuraUsuarioPorEmail(String email) {
+        for(Administrador adm:administradores) {
+            if(adm.getEmail().equals(email))
+                return adm;
+        }
+        for(Usuario u:usuarios) {
+            if(u.getEmail().equals(email))
+                return u;
+        }
+        return null;
+    }
+    
+    public boolean cadastra(Administrador a) {
+        if(procuraUsuarioPorEmail(a.getEmail()) == null) {//usuário não existe
+            return administradores.add(a);
+        } else {
+            return false;
+        }
+    }
+    
+    
+    public boolean cadastra(Usuario a) {
+        if(procuraUsuarioPorEmail(a.getEmail()) == null) {//usuário não existe
+            return usuarios.add(a);
+        } else {
+            return false;
+        }
+    }
+
     
 }
