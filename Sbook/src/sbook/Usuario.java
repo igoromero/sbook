@@ -17,7 +17,7 @@ public class Usuario {
     private String email;
 
     //construtor da class 
-    public Usuario(int nome, String cpf, String senha, String email) {
+    public Usuario(String nome, String cpf, String senha, String email) {
         this.nome = nome;
         this.cpf = cpf;
         this.senha = senha;
