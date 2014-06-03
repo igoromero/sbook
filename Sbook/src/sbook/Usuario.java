@@ -14,6 +14,16 @@ public class Usuario {
     private String nome;
     private String cpf;
     private String senha;
+    private String email;
+
+    //construtor da class 
+    public Usuario(String nome, String cpf, String senha, String email) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.senha = senha;
+        this.email = email;
+        this.codUsuario = codUsuario+1;
+    }
 
 //metodos da classe usuario
     public void pagar() {
@@ -22,13 +32,6 @@ public class Usuario {
 
     public ItemAcervo escolherItemAcervo() {
         return null;
-    }
-
-    public Usuario(int codUsuario, String nome, String cpf, String senha) {
-        this.codUsuario = codUsuario;
-        this.nome = nome;
-        this.cpf = cpf;
-        this.senha = senha;
     }
 
     public int getCodUsuario() {
