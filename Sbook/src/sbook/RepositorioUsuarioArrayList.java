@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class RepositorioUsuarioArrayList implements RepositorioUsuario {
 
-    private ArrayList<Usuario> usuarios;
+    private ArrayList<Usuario> usuarios; //arraylist usuarios
     private static RepositorioUsuario instancia;
     private static int codUsuario = 1000;
 
