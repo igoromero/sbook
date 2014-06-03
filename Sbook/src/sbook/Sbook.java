@@ -16,11 +16,8 @@ public class Sbook {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        
-        System.out.println(" teste "); //teste 
-        System.out.println("Lásaro alterou aqui."); // teste 
-        System.out.println("igo ");
+        Sistema s = new Sistema();
+        s.executa();
     }
     
 }

@@ -1,4 +1,3 @@
-
 package sbook;
 
 /**
@@ -15,16 +14,15 @@ public class Usuario {
     private String nome;
     private String cpf;
     private String senha;
-    
 
 //metodos da classe usuario
-public void pagar(){
-    
-}
+    public void pagar() {
 
-public ItemAcervo escolherItemAcervo(){ 
-    
-}
+    }
+
+    public ItemAcervo escolherItemAcervo() {
+        return null;
+    }
 
     public Usuario(int codUsuario, String nome, String cpf, String senha) {
         this.codUsuario = codUsuario;
