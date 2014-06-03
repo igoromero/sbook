@@ -20,7 +20,6 @@ public class Sbook {
         
         System.out.println(" teste "); //teste 
         System.out.println("Lásaro alterou aqui."); // teste 
-        System.out.println("novo teste ");
     }
     
 }
