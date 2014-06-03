@@ -1,14 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package sbook;
 
 /**
- *
- * @author acer
+ * Classe Sbook
+ * Objetivo: Definir o tipo Sbook e servi de exemplo para documentação
+ * Data da última atualização: 03/06/2014
+ * Empresa: IFBA
+ * @author Igo Romero 
+ * @version 0.1
  */
 public class Sbook {
 
