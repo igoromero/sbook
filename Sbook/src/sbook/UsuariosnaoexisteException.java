@@ -1,15 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package sbook;
 
 /**
- *
- * @author acer
+ * Classe UsuariosnaoexisteException
+ * Objetivo: Exeção quando nao existir um nenhum usuario cadastrado 
+ * atualização: 03/06/2014 
+ * Empresa: IFBA
+ * @author Igo Romero
+ * @version 0.1
  */
+
 class UsuariosnaoexisteException extends Exception {
 
     public UsuariosnaoexisteException() {
