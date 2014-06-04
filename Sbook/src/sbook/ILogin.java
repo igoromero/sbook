@@ -15,12 +15,15 @@ import javax.swing.JOptionPane;
 public class ILogin extends javax.swing.JFrame {
     private boolean terminou;
     private boolean janelaFechada;
+    private Sistema sistema;
 
     /**
      * Creates new form ILogin
      */
-    public ILogin() {
+    public ILogin(Sistema s) {
+        this.sistema = s;
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -35,20 +38,25 @@ public class ILogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTxtUsuario = new javax.swing.JTextField();
         JLabelSenha = new javax.swing.JLabel();
-        jTxtSenha = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jTxtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
-        jLabel1.setText("Usuário:");
+        jLabel1.setText("Email:");
 
         JLabelSenha.setText("Senha:");
 
         jButton1.setLabel("Login");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -57,21 +65,21 @@ public class ILogin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(JLabelSenha)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTxtSenha))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTxtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTxtUsuario)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(116, 116, 116)
                 .addComponent(jButton1)
-                .addGap(127, 127, 127))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,40 +92,46 @@ public class ILogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JLabelSenha)
                     .addComponent(jTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         terminou = true;
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        janelaFechada = true;
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelSenha;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTxtSenha;
+    private javax.swing.JPasswordField jTxtSenha;
     private javax.swing.JTextField jTxtUsuario;
     // End of variables declaration//GEN-END:variables
 
     @SuppressWarnings("SleepWhileInLoop")
-    Usuario fazLogin(Sistema s) {
+    Usuario entraUsuario() {
         this.terminou = false;
         janelaFechada = false;
         this.setVisible(true);
         while (true) {
             if (janelaFechada) {
+                this.setVisible(false);
                 return null;
             }
             if (terminou) {
                 //testa os dados entrados pelo usuário
-                String nome = jTxtUsuario.getText();
-                if(nome.isEmpty()) {
+                String email = jTxtUsuario.getText();
+                if(email.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "O campo Usuário está vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
                     continue;
@@ -134,7 +148,7 @@ public class ILogin extends javax.swing.JFrame {
                 jTxtUsuario.setText(null);
                 jTxtSenha.setText(null);
                 
-                Usuario u = s.loginUsuario(nome, senha);
+                Usuario u = sistema.loginUsuario(email, senha);
                 if(u == null) {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
