@@ -205,7 +205,7 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                 
                 //esconde a janela
                 this.setVisible(false);
-                return new Administrador(nome, CPF, senha);
+                return new Administrador(nome, CPF, senha );
                 
             } else {
                 try {
