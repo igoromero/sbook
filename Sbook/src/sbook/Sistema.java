@@ -18,9 +18,11 @@ public class Sistema {
     private final List<Administrador> administradores;
     private final List<Usuario> usuarios;
     private final List<ItemAcervo> acervo;
-    private final IAdicionaAdm painelAdicionaAdm;
-    private final ILogin painelLogin;
-    private Usuario logado;
+    private final IAdicionaAdm janelaAddAdm;
+    private final ILogin janelaLogin;
+    private final IUsuario janelaUsuario;
+    private Usuario usuarioLogado;
+    private Administrador admLogado;
     
     
     Sistema() {
@@ -28,22 +30,30 @@ public class Sistema {
         usuarios = new LinkedList<>();
         acervo = new LinkedList<>();
         
-        painelAdicionaAdm = new IAdicionaAdm(this);
-        painelLogin = new ILogin(this);
+        janelaAddAdm = new IAdicionaAdm(this);
+        janelaLogin = new ILogin(this);
+        janelaUsuario = new IUsuario(this);
         carregaDatabase();
         
     }
     
     void executa() {
-        if(administradores.isEmpty()) { //se não tem nenhum administrador, obriga o usuário a criar um.
-            JOptionPane.showMessageDialog(null, "O sistema não tem nenhum administrador. Adicione um.");
-            Administrador adm = painelAdicionaAdm.cadastraAdm();
-        }
-        logado = painelLogin.entraUsuario();
-        if(logado == null) {
-            salvaDatabase();
-            System.exit(0);
-        }
+//        if(administradores.isEmpty()) { //se não tem nenhum administrador, obriga o usuário a criar um.
+//            JOptionPane.showMessageDialog(null, "O sistema não tem nenhum administrador. Adicione um.");
+//            janelaAddAdm.cadastraAdm();
+//        }
+//        
+//        if(!janelaLogin.fazLogin()) { //se o usuário clicou no botão de fechar a janela
+//            salvaDatabase();
+//            System.exit(0);
+//        }
+//        
+//        //se quem fez login foi um usuario
+//        if(usuarioLogado != null) {
+//            //exibe a janela 
+            janelaUsuario.exibe(usuarioLogado);
+//        }
+        // o código vai continuar aqui.
     }
 
     private void carregaDatabase() {
@@ -54,14 +64,22 @@ public class Sistema {
     
     }
     
-    Usuario loginUsuario(String email, String senha) {
+    boolean loginUsuario(String email, String senha) {
         //procura nos administradores
         for(Administrador adm:administradores) {
             if(adm.getEmail().equals(email) && adm.getSenha().equals(senha)) {
-                return adm;
+                admLogado = adm;
+                return true;
             }
         }
-        return null;
+        
+        for(Usuario u:usuarios) {
+            if(u.getEmail().equals(email) && u.getSenha().equals(senha)) {
+                usuarioLogado = u;
+                return true;
+            }
+        }
+        return false;
     }
 
     Usuario procuraUsuarioPorEmail(String email) {

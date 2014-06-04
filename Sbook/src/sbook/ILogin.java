@@ -119,14 +119,14 @@ public class ILogin extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     @SuppressWarnings("SleepWhileInLoop")
-    Usuario entraUsuario() {
+    boolean fazLogin() {
         this.terminou = false;
         janelaFechada = false;
         this.setVisible(true);
         while (true) {
             if (janelaFechada) {
                 this.setVisible(false);
-                return null;
+                return true;
             }
             if (terminou) {
                 //testa os dados entrados pelo usuário
@@ -148,15 +148,14 @@ public class ILogin extends javax.swing.JFrame {
                 jTxtUsuario.setText(null);
                 jTxtSenha.setText(null);
                 
-                Usuario u = sistema.loginUsuario(email, senha);
-                if(u == null) {
+                if(sistema.loginUsuario(email, senha)) {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
                     continue;
                 }
                 //esconde a janela
                 this.setVisible(false);
-                return u;
+                return true;
                 
             } else {
                 try {

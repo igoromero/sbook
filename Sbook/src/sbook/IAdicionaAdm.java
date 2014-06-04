@@ -198,14 +198,14 @@ public class IAdicionaAdm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     @SuppressWarnings("SleepWhileInLoop")
-    Administrador cadastraAdm() {
+    boolean cadastraAdm() {
         this.terminou = false;
         janelaFechada = false;
         this.setVisible(true);
         while (true) {
             if (janelaFechada) {
                 this.setVisible(false);
-                return null;
+                return false;
             }
             if (terminou) {
                 //testa os dados entrados pelo usuário
@@ -279,9 +279,8 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                 
                 //esconde a janela
                 this.setVisible(false);
-                Administrador a = new Administrador(nome, CPF, senha, email);
-                sistema.cadastra(a);
-                return a;
+                sistema.cadastra(new Administrador(nome, CPF, senha, email));
+                return true;
                 
             } else {
                 try {

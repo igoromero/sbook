@@ -11,6 +11,7 @@ public class Usuario {
 
 //atributos da classe Usuario
     private int codUsuario;
+    private static int contador = 0x29A;
     private String nome;
     private String cpf;
     private String senha;
@@ -22,7 +23,9 @@ public class Usuario {
         this.cpf = cpf;
         this.senha = senha;
         this.email = email;
-        this.codUsuario = codUsuario+1;
+//        this.codUsuario = codUsuario+1; <-isso não funciona. Vai dá sempre 1
+        this.codUsuario = contador;
+        contador++;
     }
 
 //metodos da classe usuario
@@ -72,6 +75,30 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    /**
+     * Este método retorna uma string contendo todo o Objeto na forma de string
+     * para ser salvo em um arquivo de texto.
+     *
+     * @return String que representa o objeto.
+     */
+    public String retornaEstado() {
+        return codUsuario + " " +
+            nome + " " +
+            cpf + " " +
+            senha + " " +
+            email + "\n";
+    }
+    
+    /**
+     * Inicializa o objeto a partir dos dados em <code>s</code>
+     *
+     * @param s A string contendo o estado do objeto
+     * @return true se tudo aconteceu normal. false se não.
+     */
+    public boolean carregaEstado(String s) {
+        return false;
     }
 
 }
