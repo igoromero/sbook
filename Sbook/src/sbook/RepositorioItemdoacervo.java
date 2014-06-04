@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author acer
+ * @author Igo Romero 
  */
 public interface RepositorioItemdoacervo {
 
