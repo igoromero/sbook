@@ -11,8 +11,7 @@ import java.util.Iterator;
  * @version 0.1
  */
 public class RepositorioUsuarioArrayList implements RepositorioUsuario {
-
-    private final ArrayList<Usuario> usuarios;
+    private ArrayList<Usuario> usuarios; //arraylist usuarios
     private static RepositorioUsuario instancia;
 
     

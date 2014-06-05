@@ -8,10 +8,8 @@ package sbook;
 
 /**
  *
- * @author acer
+ * @author Lásaro Rocha
  */
 class ItemJaExisteException extends Exception {
-    public ItemJaExisteException() {
-        super();
-    }
+    
 }

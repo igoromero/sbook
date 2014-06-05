@@ -116,6 +116,17 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                             .addComponent(jTxtNome, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTxtEmail, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+<<<<<<< HEAD
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTxtConfirmarSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                                .addComponent(jTxtSenha, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTxtCPF, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTxtNome, javax.swing.GroupLayout.Alignment.LEADING)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+=======
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jTxtCPF)
@@ -128,6 +139,7 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                 .addGap(65, 65, 65)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+>>>>>>> origin/master
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,8 +294,16 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                 }
                 //esconde a janela
                 this.setVisible(false);
+<<<<<<< HEAD
                 return true;
                 
+=======
+                return new Administrador(nome, CPF, senha );
+
+                Administrador a = new Administrador(nome, CPF, senha, email);
+                sistema.cadastra(a);
+                return a;
+>>>>>>> 0c24f860e360af538636819ba79afac6642650e0
             } else {
                 try {
                     Thread.sleep(50);

@@ -14,6 +14,15 @@ public class Administrador extends Usuario {
 
     public Administrador(String nome, String cpf, String senha, String email) {
         super(nome, cpf, senha, email);
+    }
+
+    Administrador(String nome, String CPF, String senha) {
+        super(nome, CPF, senha, senha);
+      
+    }
+
+   
+
     } 
            
-}
+
