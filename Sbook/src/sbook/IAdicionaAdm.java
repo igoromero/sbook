@@ -5,6 +5,8 @@
  */
 package sbook;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -225,11 +227,6 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                     terminou = false;
                     continue;
                     
-                } else if(sistema.procuraUsuarioPorEmail(email) != null) { //procura o email no sistema
-                    JOptionPane.showMessageDialog(null, "Esse email já está cadastrado no sistema.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    terminou = false;
-                    continue;
-                    
                 } else if(email.indexOf('@') == -1) {
                     JOptionPane.showMessageDialog(null, "Email inválido", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
@@ -237,8 +234,8 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                 }
                 
                 //testa o campo CPF
-                String CPF = jTxtCPF.getText();
-                if(CPF.isEmpty()) {
+                String cpf = jTxtCPF.getText();
+                if(cpf.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "O campo CPF está vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
                     continue;
@@ -276,10 +273,15 @@ public class IAdicionaAdm extends javax.swing.JFrame {
                 jTxtSenha.setText(null);
                 jTxtEmail.setText(null);
                 jTxtConfirmarSenha.setText(null);
-                
+                try {
+                    sistema.cadastraUsuario(new Administrador(nome, cpf, senha, email));
+                } catch (UsuarioJaExisteException ex) {
+                    JOptionPane.showMessageDialog(null, "Já existe um usuário com o CPF informado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    terminou = false;
+                    continue;
+                }
                 //esconde a janela
                 this.setVisible(false);
-                sistema.cadastra(new Administrador(nome, CPF, senha, email));
                 return true;
                 
             } else {

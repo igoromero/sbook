@@ -6,6 +6,8 @@
 
 package sbook;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -49,7 +51,7 @@ public class ILogin extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Email:");
+        jLabel1.setText("CPF:");
 
         JLabelSenha.setText("Senha:");
 
@@ -67,14 +69,12 @@ public class ILogin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(JLabelSenha)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTxtSenha))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTxtUsuario)))
+                    .addComponent(JLabelSenha)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTxtUsuario)
+                    .addComponent(jTxtSenha))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(116, 116, 116)
@@ -130,8 +130,8 @@ public class ILogin extends javax.swing.JFrame {
             }
             if (terminou) {
                 //testa os dados entrados pelo usuário
-                String email = jTxtUsuario.getText();
-                if(email.isEmpty()) {
+                String cpf = jTxtUsuario.getText();
+                if(cpf.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "O campo Usuário está vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
                     continue;
@@ -147,12 +147,18 @@ public class ILogin extends javax.swing.JFrame {
                 //apaga os dados das caixas de texto
                 jTxtUsuario.setText(null);
                 jTxtSenha.setText(null);
-                
-                if(sistema.loginUsuario(email, senha)) {
-                    JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+                try {
+                    sistema.loginUsuario(cpf, senha);
+                } catch (UsuarioNaoExisteException ex) {
+                    JOptionPane.showMessageDialog(null, "CPF não cadastrado no sistema.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    terminou = false;
+                    continue;
+                } catch (SenhaInvalidaException ex) {
+                    JOptionPane.showMessageDialog(null, "Senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
                     terminou = false;
                     continue;
                 }
+                
                 //esconde a janela
                 this.setVisible(false);
                 return true;

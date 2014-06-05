@@ -1,23 +1,24 @@
 package sbook;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Classe RepositorioArrayList Objetivo: A Class RepositorioArrayList representa
- * o conjunto de usuarios 
- * atualização: 03/06/2014 
- * Empresa: IFBA
+ * o conjunto de usuarios atualização: 03/06/2014 Empresa: IFBA
+ *
  * @author Igo Romero
  * @version 0.1
  */
 public class RepositorioUsuarioArrayList implements RepositorioUsuario {
 
-    private ArrayList<Usuario> usuarios;
+    private final ArrayList<Usuario> usuarios;
     private static RepositorioUsuario instancia;
-    private static int codUsuario = 1000;
 
-    public RepositorioUsuarioArrayList() {
-        this.usuarios = new ArrayList<Usuario>();
+    
+    //só deve ser instanciada pelo método obterInstancia
+    private RepositorioUsuarioArrayList() {
+        this.usuarios = new ArrayList<>();
     }
 
     /**
@@ -30,45 +31,40 @@ public class RepositorioUsuarioArrayList implements RepositorioUsuario {
             instancia = new RepositorioUsuarioArrayList();
         }
         return instancia;
-
     }
 
     /**
      * Incluir um usuario ao repositorio
      *
-     * @param u Usuario
-     * @return void
-     * @exception UsuariojaexisteException
+     * @param u Usuario a ser adicionado
+     * @throws UsuarioJaExisteException
      */
-    public void incluirUsuario(Usuario u) throws UsuariojaexisteException {
-
+    @Override
+    public void incluirUsuario(Usuario u) throws UsuarioJaExisteException {
         for (Usuario d : usuarios) {
             if (u.getCpf().equals(d.getCpf())) {
-                throw new UsuariojaexisteException();
+                throw new UsuarioJaExisteException();
             }
-
         }
         usuarios.add(u);
     }
 
     /**
-     * remove um usuario ao repositorio
+     * Remove um usuario do repositorio
      *
-     * @param u Usuario
-     * @return
-     * @exception UsuarionaoexisteException
+     * @param u Usuario a ser removido.
+     * @throws UsuarioNaoExisteException caso o usuário não exista.
      */
-    public void excluirUsuario(Usuario u) throws UsuarionaoexisteException {
+    @Override
+    public void excluirUsuario(Usuario u) throws UsuarioNaoExisteException {
         for (Usuario d : usuarios) {
-
             if (u.getCpf().equals(d.getCpf())) {
                 usuarios.remove(d);
                 return;
             }
         }
 
-        throw new UsuarionaoexisteException();
-
+        throw new UsuarioNaoExisteException();
     }
 
     /**
@@ -76,27 +72,32 @@ public class RepositorioUsuarioArrayList implements RepositorioUsuario {
      *
      * @param cpf usuario
      * @return usuario
-     * @exception UsuarionaoexisteException
+     * @throws UsuarioNaoExisteException
      */
-    public Usuario pesquisarUsuario(String cpf) throws UsuarionaoexisteException {
-
+    @Override
+    public Usuario pesquisarUsuario(String cpf) throws UsuarioNaoExisteException {
         for (Usuario a : usuarios) {
             if (a.getCpf().equals(cpf)) {
                 return a;
             }
 
         }
-        throw new UsuarionaoexisteException();
+        throw new UsuarioNaoExisteException();
     }
 
     /**
-     * ListarUsuario lista todos os usuarios do repositorio
+     * <code>ListarUsuario</code> lista todos os usuarios do repositorio
      *
-     * @return usuarios
-     * @exception UsuarionaoexisteException
+     * @return Um ArrayList contendo todos os usuários do repositório.
+     * @throws sbook.UsuariosNaoExisteException
      */
-    public ArrayList<Usuario> listarUsuario() throws UsuariosnaoexisteException {
+    @Override
+    public ArrayList<Usuario> listarUsuario() throws UsuariosNaoExisteException {
         return usuarios;
     }
 
+    @Override
+    public Iterator iterator() {
+        return usuarios.iterator();
+    }
 }

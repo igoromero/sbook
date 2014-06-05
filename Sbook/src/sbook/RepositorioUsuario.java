@@ -1,7 +1,7 @@
 
 package sbook;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class interface RepositorioUsuario
@@ -13,10 +13,12 @@ import java.util.ArrayList;
  */
 
 
-public interface RepositorioUsuario {
-    void incluirUsuario(Usuario u) throws UsuariojaexisteException;
-    void excluirUsuario(Usuario u) throws UsuarionaoexisteException;
-    Usuario pesquisarUsuario(String cpf) throws UsuarionaoexisteException;
-    ArrayList<Usuario> listarUsuario()  throws UsuariosnaoexisteException;
+public interface RepositorioUsuario extends Iterable {
+    void incluirUsuario(Usuario u) throws UsuarioJaExisteException;
     
+    void excluirUsuario(Usuario u) throws UsuarioNaoExisteException;
+    
+    Usuario pesquisarUsuario(String cpf) throws UsuarioNaoExisteException;
+    
+    List<Usuario> listarUsuario()  throws UsuariosNaoExisteException;    
 }

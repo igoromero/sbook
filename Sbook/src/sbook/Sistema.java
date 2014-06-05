@@ -6,8 +6,9 @@
 
 package sbook;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,9 +16,8 @@ import javax.swing.JOptionPane;
  * @author Lásaro Rocha
  */
 public class Sistema {
-    private final List<Administrador> administradores;
-    private final List<Usuario> usuarios;
-    private final List<ItemAcervo> acervo;
+    private final RepositorioUsuario usuarios;
+    private final RepositorioItemAcervo acervo;
     private final IAdicionaAdm janelaAddAdm;
     private final ILogin janelaLogin;
     private final IUsuario janelaUsuario;
@@ -26,9 +26,8 @@ public class Sistema {
     
     
     Sistema() {
-        administradores = new LinkedList<>();
-        usuarios = new LinkedList<>();
-        acervo = new LinkedList<>();
+        usuarios = RepositorioUsuarioArrayList.obterInstancia();
+        acervo = RepositorioItemAcervoArrayList.obterInstancia();
         
         janelaAddAdm = new IAdicionaAdm(this);
         janelaLogin = new ILogin(this);
@@ -38,7 +37,8 @@ public class Sistema {
     }
     
     void executa() {
-//        if(administradores.isEmpty()) { //se não tem nenhum administrador, obriga o usuário a criar um.
+        try {
+            //        if(administradores.isEmpty()) { //se não tem nenhum administrador, obriga o usuário a criar um.
 //            JOptionPane.showMessageDialog(null, "O sistema não tem nenhum administrador. Adicione um.");
 //            janelaAddAdm.cadastraAdm();
 //        }
@@ -50,7 +50,13 @@ public class Sistema {
 //        
 //        //se quem fez login foi um usuario
 //        if(usuarioLogado != null) {
-//            //exibe a janela 
+//            //exibe a janela
+            acervo.incluirItem(new Livro("Lásaro", "909898", 1, 999666, "Valhala", 5.00, 1));
+            acervo.incluirItem(new Apostila(999, "Como cozinhar", "Lásaro", 0.90, 2));
+            acervo.incluirItem(new Texto(969, "texto inutil", "Lásaro", 0.10, 1));
+        } catch (ItemJaExisteException ex) {
+            
+        }
             janelaUsuario.exibe(usuarioLogado);
 //        }
         // o código vai continuar aqui.
@@ -64,52 +70,28 @@ public class Sistema {
     
     }
     
-    boolean loginUsuario(String email, String senha) {
+    void loginUsuario(String cpf, String senha) throws UsuarioNaoExisteException, SenhaInvalidaException {
         //procura nos administradores
-        for(Administrador adm:administradores) {
-            if(adm.getEmail().equals(email) && adm.getSenha().equals(senha)) {
-                admLogado = adm;
-                return true;
-            }
+        usuarioLogado = usuarios.pesquisarUsuario(cpf);
+        if(!usuarioLogado.getSenha().equals(senha)) {
+            throw new SenhaInvalidaException();
         }
-        
-        for(Usuario u:usuarios) {
-            if(u.getEmail().equals(email) && u.getSenha().equals(senha)) {
-                usuarioLogado = u;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    Usuario procuraUsuarioPorEmail(String email) {
-        for(Administrador adm:administradores) {
-            if(adm.getEmail().equals(email))
-                return adm;
-        }
-        for(Usuario u:usuarios) {
-            if(u.getEmail().equals(email))
-                return u;
-        }
-        return null;
-    }
-    
-    public boolean cadastra(Administrador a) {
-        if(procuraUsuarioPorEmail(a.getEmail()) == null) {//usuário não existe
-            return administradores.add(a);
-        } else {
-            return false;
-        }
-    }
-    
-    
-    public boolean cadastra(Usuario a) {
-        if(procuraUsuarioPorEmail(a.getEmail()) == null) {//usuário não existe
-            return usuarios.add(a);
-        } else {
-            return false;
+        //se o usuário logado é um administrador
+        if(usuarioLogado.getClass().isInstance(Administrador.class)) {
+            admLogado = (Administrador) usuarioLogado;
+            usuarioLogado = null;
         }
     }
 
+    public Usuario procuraUsuario(String cpf) throws UsuarioNaoExisteException {
+        return usuarios.pesquisarUsuario(cpf);
+    }
     
+    public void cadastraUsuario(Usuario a) throws UsuarioJaExisteException {
+        usuarios.incluirUsuario(a);
+    }
+    
+    List<ItemAcervo> obtemAcervo() throws AcervoVazioException {
+        return acervo.listarItens();
+    }
 }
